@@ -1,6 +1,8 @@
-package org.swarm.generator.rest;
+package io.quarkus.generator.rest;
 
 import org.junit.Test;
+
+import io.quarkus.generator.rest.EndpointFilePathGenerator;
 
 import static org.junit.Assert.assertEquals;
 

@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   <groupId>org.wildfly.swarm</groupId>
-   <artifactId>generator</artifactId>
-   <version>1.0.0-SNAPSHOT</version>
+   <groupId>io.quarkus</groupId>
+   <artifactId>quarkus-generator</artifactId>
+   <version>999-SNAPSHOT</version>
    <packaging>war</packaging>
    <properties>
-      <version.wildfly-swarm>2016.10.0</version.wildfly-swarm>
+      <quarkus.version>999-SNAPSHOT</quarkus.version>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,9 +24,9 @@
          <scope>provided</scope>
       </dependency>
       <dependency>
-         <groupId>org.thymeleaf</groupId>
-         <artifactId>thymeleaf</artifactId>
-         <version>3.0.1.RELEASE</version>
+         <groupId>io.quarkus</groupId>
+         <artifactId>quarkus-devtools-common</artifactId>
+    	<version>${quarkus.version}</version>
       </dependency>
       <dependency>
          <groupId>junit</groupId>

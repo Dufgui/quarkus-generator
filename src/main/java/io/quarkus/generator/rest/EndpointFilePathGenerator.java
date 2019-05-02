@@ -1,4 +1,4 @@
-package org.swarm.generator.rest;
+package io.quarkus.generator.rest;
 
 /**
  * Generates the file path and package of a sample JAXRS service based upon the

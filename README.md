@@ -1,2 +1,2 @@
-# swarm-generator
-Swarm Generator Server-side
+# quarkus-generator
+Quarkus Generator Server-side based on Thorntail
