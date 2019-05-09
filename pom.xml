@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>io.quarkus</groupId>
    <artifactId>quarkus-generator</artifactId>
    <version>999-SNAPSHOT</version>
    <packaging>war</packaging>
    <properties>
+   	  <thorntail.version>2.3.0.Final</thorntail.version>
       <quarkus.version>999-SNAPSHOT</quarkus.version>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
@@ -64,9 +63,9 @@
          <dependencyManagement>
             <dependencies>
                <dependency>
-                  <groupId>org.wildfly.swarm</groupId>
+                  <groupId>io.thorntail</groupId>
                   <artifactId>bom</artifactId>
-                  <version>${version.wildfly-swarm}</version>
+                  <version>${thorntail.version}</version>
                   <scope>import</scope>
                   <type>pom</type>
                </dependency>
@@ -75,9 +74,9 @@
          <build>
             <plugins>
                <plugin>
-                  <groupId>org.wildfly.swarm</groupId>
-                  <artifactId>wildfly-swarm-plugin</artifactId>
-                  <version>${version.wildfly-swarm}</version>
+                  <groupId>io.thorntail</groupId>
+                  <artifactId>thorntail-maven-plugin</artifactId>
+                  <version>${thorntail.version}</version>
                   <executions>
                      <execution>
                         <goals>
@@ -90,11 +89,11 @@
          </build>
          <dependencies>
             <dependency>
-               <groupId>org.wildfly.swarm</groupId>
+               <groupId>io.thorntail</groupId>
                <artifactId>cdi</artifactId>
             </dependency>
             <dependency>
-               <groupId>org.wildfly.swarm</groupId>
+               <groupId>io.thorntail</groupId>
                <artifactId>jaxrs-validator</artifactId>
             </dependency>
          </dependencies>

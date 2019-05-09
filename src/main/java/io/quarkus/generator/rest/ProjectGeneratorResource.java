@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 
 import io.quarkus.cli.commands.AddExtensions;
 import io.quarkus.cli.commands.CreateProject;
-import io.quarkus.cli.commands.writer.ZipWriter;
+import io.quarkus.cli.commands.writer.ZipProjectWriter;
 import io.quarkus.templates.SourceType;
 
 
@@ -41,18 +41,19 @@ public class ProjectGeneratorResource {
             @QueryParam("g") @DefaultValue("com.example") @NotNull(message = "Parameter 'g' (Group Id) must not be null") String groupId,
             @QueryParam("a") @DefaultValue("demo") @NotNull(message = "Parameter 'a' (Artifact Id) must not be null") String artifactId,
             @QueryParam("pv") @DefaultValue("0.0.1-SNAPSHOT") String projectVersion,
-            @QueryParam("cn") @DefaultValue("FruitResource") String className,
+            @QueryParam("cn") @DefaultValue("FruitResource") @NotNull(message = "Parameter 'cn' (Class name) must not be null") String className,
             @QueryParam("e") Set<String> extensions)
             throws Exception {
-        // Remove empty values
-        extensions.remove("");
+        
+        Set<String> cleanedExtensions = new HashSet<>(extensions);
+        cleanedExtensions.remove("");
         
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ZipOutputStream zos = new ZipOutputStream(baos)) {
             final Map<String, Object> context = new HashMap<>();
             final SourceType sourceType = CreateProject.determineSourceType(extensions);
             
-            ZipWriter zipWrite = new ZipWriter(zos);
+            ZipProjectWriter zipWrite = new ZipProjectWriter(zos);
             boolean success = new CreateProject(zipWrite)
                     .groupId(groupId)
                     .artifactId(artifactId)
@@ -64,43 +65,18 @@ public class ProjectGeneratorResource {
             
             if (success) {
                 new AddExtensions(zipWrite, "pom.xml")
-                        .addExtensions(extensions);
+                        .addExtensions(cleanedExtensions);
             }
     
             //TODO
             //createMavenWrapper(zipWrite);
         }
-        
-//            zos.putNextEntry(new ZipEntry(artifactId + "/src/main/java/"));
-//            zos.closeEntry();
-//
-//            zos.putNextEntry(new ZipEntry(artifactId + "/pom.xml"));
-//            zos.write(engine.process("templates/pom.tl.xml", context).getBytes());
-//            zos.closeEntry();
-//
-//            if (enableJAXRS(dependencies)) {
-//                EndpointFilePathGenerator fpg = new EndpointFilePathGenerator(groupId, artifactId);
-//                context.setVariable("endpointPackage", fpg.getEndpointPackage());
-//                zos.putNextEntry(new ZipEntry(artifactId + fpg.getEndpointFilePath()));
-//                zos.write(engine.process("templates/HelloWorldEndpoint.tl.java", context).getBytes());
-//                zos.putNextEntry(new ZipEntry(artifactId + fpg.getApplicationPath()));
-//                zos.write(engine.process("templates/RestApplication.tl.java", context).getBytes());
-//                zos.closeEntry();
-//            }
-        
 
         return Response
                 .ok(baos.toByteArray())
                 .type("application/zip")
                 .header("Content-Disposition", "attachment; filename=\"" + artifactId + ".zip\"")
                 .build();
-    }
-
-    private boolean enableJAXRS(List<String> dependencies) {
-        if (dependencies == null || dependencies.size() == 0) {
-            return true;
-        }
-        return dependencies.stream().anyMatch(d -> d.contains("jaxrs") || d.contains("microprofile"));
     }
 
 }
