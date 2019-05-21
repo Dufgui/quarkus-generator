@@ -1,2 +1,2 @@
 # quarkus-generator
-Quarkus Generator Server-side based on Thorntail
+Quarkus Generator Server-side backend based on Quarkus

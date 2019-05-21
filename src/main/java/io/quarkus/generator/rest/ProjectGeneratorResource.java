@@ -25,8 +25,6 @@ import io.quarkus.cli.commands.CreateProject;
 import io.quarkus.cli.commands.writer.ZipProjectWriter;
 import io.quarkus.templates.SourceType;
 
-
-@ApplicationScoped
 @Path("/generator")
 public class ProjectGeneratorResource {
     private static final String QUARKUS_VERSION = "999-SNAPSHOT";
